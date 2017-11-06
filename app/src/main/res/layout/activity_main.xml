@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.whatsappandroid.cursoandroid.focar.MainActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="135dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="190dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/estatBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <ImageView
+        android:id="@+id/focoBtn"
+        android:layout_width="143dp"
+        android:layout_height="121dp"
+        android:layout_marginBottom="256dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/aviaoBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="@drawable/botao_foco" />
+
+    <ImageView
+        android:id="@+id/aviaoBtn"
+        android:layout_width="143dp"
+        android:layout_height="121dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/focoBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/focoBtn"
+        app:layout_constraintTop_toTopOf="@+id/focoBtn"
+        app:srcCompat="@drawable/aviao" />
+
+    <ImageView
+        android:id="@+id/respireBtn"
+        android:layout_width="143dp"
+        android:layout_height="121dp"
+        android:layout_marginBottom="82dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/focoBtn"
+        app:layout_constraintEnd_toStartOf="@+id/estatBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/repire" />
+
+    <ImageView
+        android:id="@+id/estatBtn"
+        android:layout_width="143dp"
+        android:layout_height="121dp"
+        android:layout_marginBottom="82dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/respireBtn"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="@drawable/girafico" />
+</android.support.constraint.ConstraintLayout>
