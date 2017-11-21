@@ -3,5 +3,6 @@
     <color name="colorPrimary">#3ba6d8</color>
     <color name="colorPrimaryDark">#277397</color>
     <color name="colorAccent">#FFC93C</color>
-    <color name="colorSplash">#FFFFFF</color>
+    <color name="colorSplash">#ffffff</color>
+    <color name="GoogleLogin">#ff8160</color>
 </resources>

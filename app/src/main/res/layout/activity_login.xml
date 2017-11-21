@@ -46,4 +46,24 @@
         fbutton:layout_constraintRight_toRightOf="parent"
         fbutton:srcCompat="@mipmap/focus_launcher_foreground" />
 
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/gLogIn"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/GoogleLogin"
+        android:drawableLeft="@drawable/googleicon"
+        android:drawablePadding="15dp"
+        android:text="Google Login"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogIn"
+        fbutton:layout_constraintLeft_toLeftOf="parent"
+        fbutton:layout_constraintRight_toRightOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

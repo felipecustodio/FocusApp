@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "885419987828",
+    "project_id": "focus-96948"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:885419987828:android:069d0be8f889cf1c",
+        "android_client_info": {
+          "package_name": "br.com.whatsappandroid.cursoandroid.focar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "885419987828-3llmk26iqm3kflu6lb0aarfp1kaij7ik.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "885419987828-4ugse0rtmgh1u4qen3n2stcafnbou940.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.whatsappandroid.cursoandroid.focar",
+            "certificate_hash": "c9cd3c91881b793d01249b2032e667c4d0fac29e"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApyqS9O89bUJufih0KmTm3ovkqMX66Hh4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

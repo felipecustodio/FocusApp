@@ -1,6 +1,7 @@
 package br.com.whatsappandroid.cursoandroid.focar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,8 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class FocoActivity extends AppCompatActivity {
+
+    private ImageView circle;
+    private TextView counter;
+    static boolean isCircleCreated = false;
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +28,34 @@ public class FocoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_foco);
 
         createCircle();
+        counter = (TextView) findViewById(R.id.counter);
+        counter.setText(Integer.toString(count));
+
+        if(isCircleCreated) {
+            circle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addToCount(1);
+                    counter.setText(Integer.toString(count));
+                }
+            });
+        }
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getCount() {
+        return this.count;
+    }
+
+    public void addToCount(int value) {
+        this.count += value;
     }
 
     public void createCircle(){
-        ImageView circle = (ImageView) findViewById(R.id.circle);
+        circle = (ImageView) findViewById(R.id.circle);
         int radius = 200;
         Paint paint = new Paint();
         paint.setColor(Color.parseColor("#3ba6d8"));
@@ -34,6 +65,8 @@ public class FocoActivity extends AppCompatActivity {
         Canvas canvas = new Canvas(bmp);
         canvas.drawCircle(bmp.getWidth()/2, bmp.getHeight()/2, radius, paint);
         circle.setImageBitmap(bmp);
+        isCircleCreated = true;
+        setCount(0);
     }
 
 //    public class Circle extends View{
