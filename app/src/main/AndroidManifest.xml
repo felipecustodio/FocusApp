@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.whatsappandroid.cursoandroid.focar">
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:name=".slowSplash"
         android:allowBackup="true"
         android:icon="@mipmap/focus_launcher_round"
