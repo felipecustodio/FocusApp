@@ -1,19 +1,37 @@
 package br.com.whatsappandroid.cursoandroid.focar;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    //Variavel para usar o banco de dados.
+    SQLiteDatabase db;
+
+    //Texto de Olá para o usuario especifico
+    private TextView nome_conta;
 
     private static final String TAG = "MyActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Pegando qual login veio da outra activity
+        //Intent intent = getIntent();
+        //String user = getIntent().getStringExtra("db_name");
+
+        //Abrir o banco de dados correto
+        //Cursor nome_db = db.rawQuery("SELECT * FROM usuarios WHERE Nome_login = '"+ user.toUpperCase() +"'", null);
+
+
         setContentView(R.layout.activity_main);
 
         ImageView foco = (ImageView) findViewById(R.id.focoBtn);
@@ -52,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //Label para usar o usuario cadastrado no banco de dados
+        //nome_conta.setText(nome_db.getString(0));
+
+
     }
 
 }

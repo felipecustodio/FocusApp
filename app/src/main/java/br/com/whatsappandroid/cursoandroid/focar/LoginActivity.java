@@ -63,22 +63,29 @@ public class LoginActivity extends AppCompatActivity {
                 }else{
                     teste_carac = 0;
                     //Tenta buscar primeiro para ver se existe
-                    Cursor valido = db.rawQuery("SELECT * FROM usuarios WHERE Nome_login = '"+ logUser.getText().toString().toUpperCase() +"'", null);
+                    Cursor existe = null;
+                    existe = db.rawQuery("SELECT * FROM usuarios WHERE Nome_login = '"+ logUser.getText().toString().toUpperCase() +"'", null);
+                    Toast.makeText(LoginActivity.this, existe.toString(), Toast.LENGTH_SHORT).show();
 
-                    if(valido == null) {
+                    if(existe == null) {
                         //Após checar se e um login valido, criar no bd ou buscar usuario
+                        Toast.makeText(LoginActivity.this, "Nao Exite", Toast.LENGTH_SHORT).show();
                         db.execSQL("INSERT  INTO usuarios VALUES('" + logUser.getText().toString().toUpperCase() + "', '0)");
-                    }
+                        existe.close();
+                    }else{
 
-                    //entrar no Login recem criado, ou ja presente no banco de dados'
+                        Toast.makeText(LoginActivity.this, "Exite", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
 
+                String nome = logUser.getText().toString().toUpperCase();
 
 
                 if(teste_carac == 0) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(i);
+                    i.putExtra("db_name", nome );
+                    //startActivity(i);
                 }
             }
         });
