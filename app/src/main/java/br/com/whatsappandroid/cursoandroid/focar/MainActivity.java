@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Variavel para usar o banco de dados.
-    SQLiteDatabase db;
 
     //Texto de Olá para o usuario especifico
     private TextView nome_conta;
@@ -27,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
         //Pegando qual login veio da outra activity
         //Intent intent = getIntent();
         //String user = getIntent().getStringExtra("db_name");
-
-        //Abrir o banco de dados correto
-        //Cursor nome_db = db.rawQuery("SELECT * FROM usuarios WHERE Nome_login = '"+ user.toUpperCase() +"'", null);
 
 
         setContentView(R.layout.activity_main);

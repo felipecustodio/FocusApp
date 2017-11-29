@@ -47,8 +47,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //Criando, caso nao exista, o banco de dados
+                //db = openOrCreateDatabase("FOCUS", Context.MODE_PRIVATE, null);
+                //db.execSQL("CREATE TABLE IF NOT EXISTS USUARIO_FOCUS (NOME_LOGIN VARCHAR, FOCO_USER INT;)");
+
                 //Verificando se o nome ja existe no banco de dados
                 //Criando um novo usuario ou selecionando o existente
+
+                String nome = logUser.getText().toString().toUpperCase();
 
                 //Checando se está vazio ou se é muito pequeno
                 if(logUser.getText().toString().toUpperCase().length() == 0){
@@ -62,30 +68,19 @@ public class LoginActivity extends AppCompatActivity {
                     teste_carac = 1;
                 }else{
                     teste_carac = 0;
-                    //Tenta buscar primeiro para ver se existe
-                    Cursor existe = null;
-                    existe = db.rawQuery("SELECT * FROM usuarios WHERE Nome_login = '"+ logUser.getText().toString().toUpperCase() +"'", null);
-                    Toast.makeText(LoginActivity.this, existe.toString(), Toast.LENGTH_SHORT).show();
 
-                    if(existe == null) {
-                        //Após checar se e um login valido, criar no bd ou buscar usuario
-                        Toast.makeText(LoginActivity.this, "Nao Exite", Toast.LENGTH_SHORT).show();
-                        db.execSQL("INSERT  INTO usuarios VALUES('" + logUser.getText().toString().toUpperCase() + "', '0)");
-                        existe.close();
-                    }else{
+                        db.execSQL("INSERT INTO USUARIO_FOCUS VALUES('" + nome + "', 0 )");
 
-                        Toast.makeText(LoginActivity.this, "Exite", Toast.LENGTH_SHORT).show();
-                    }
 
                 }
 
-                String nome = logUser.getText().toString().toUpperCase();
+
 
 
                 if(teste_carac == 0) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    i.putExtra("db_name", nome );
-                    //startActivity(i);
+                    //i.putExtra("db_name", nome );
+                    startActivity(i);
                 }
             }
         });
@@ -103,14 +98,6 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
-
-
-        //Criando o banco de dados
-
-        db = openOrCreateDatabase("UsuarioDB", Context.MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS usuarios (Nome_login VARCHAR, Quant_foco DOUBLE)");
-
-
 
 
     }
