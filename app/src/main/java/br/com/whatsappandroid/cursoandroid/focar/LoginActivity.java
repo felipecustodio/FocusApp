@@ -59,21 +59,21 @@ public class LoginActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
 
 
-            //Variavel para armazenar o nome
-            String nome_digitado = logUser.getText().toString().toUpperCase();
-
             //Criando mensagem de alerta
             private AlertDialog alerta;
 
+
+
             @Override
             public void onClick(View view) {
-                if (nome_digitado.length() == 0) {
+
+                if (logUser.getText().toString().toUpperCase().length() == 0) {
                     Toast.makeText(LoginActivity.this, "Insira um Login", Toast.LENGTH_SHORT).show();
                     teste_carac = 1; //Nao deixar seguir para a proxima tela
-                } else if (nome_digitado.length() <= 3) {
+                } else if (logUser.getText().toString().toUpperCase().length() <= 3) {
                     Toast.makeText(LoginActivity.this, "Login muito curto", Toast.LENGTH_SHORT).show();
                     teste_carac = 1;
-                } else if (nome_digitado.length() > 18) {
+                } else if (logUser.getText().toString().toUpperCase().length() > 18) {
                     Toast.makeText(LoginActivity.this, "Login muito longo", Toast.LENGTH_SHORT).show();
                     teste_carac = 1;
                 } else {
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                     //CODIGO PARA VERIFICAR SE DESEJA CRIAR OUTRO E APAGAR O ANTIGO COM O MESMO NOME
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);//Cria o gerador do AlertDialog
-                    builder.setTitle("Criar novo login?/");//define o titulo
+                    builder.setTitle("Criar novo login?");//define o titulo
                     builder.setMessage("O Login antigo com o mesmo nome será apagado!");//define a mensagem
 
                     //BOTAO POSITIVO
@@ -92,14 +92,12 @@ public class LoginActivity extends AppCompatActivity {
                             //CODIGO PARA CRIAR UM NOVO LOGIN NO BANCO DE DADOS
                             BancoControle crud = new BancoControle(getBaseContext());
 
+                            //CASO ACEITE, CRIA UM NOVO LOGIN
                             //Recebe por padrao o valor 0 para a quantidade de focos perdidos
-                            String result = crud.insereDado(nome_digitado, 0);
-
-
-                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-
-
+                            String result = crud.insereDado(logUser.getText().toString().toUpperCase(), 0);
+                            //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                             Toast.makeText(LoginActivity.this, "Parabéns, você criou um novo Login", Toast.LENGTH_SHORT).show();
+
                         }
                     });
 

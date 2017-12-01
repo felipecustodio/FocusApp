@@ -22,6 +22,7 @@ public class BancoControle {
     //Controle de inserir dados no banco
     public String insereDado(String nome, int focos){
         ContentValues valores;
+
         long resultado;
 
         //Para escrever no banco de dados

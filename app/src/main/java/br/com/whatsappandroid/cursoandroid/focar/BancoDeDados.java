@@ -15,9 +15,10 @@ public class BancoDeDados extends SQLiteOpenHelper {
     //Definicoes do que sera usado no banco de dados
     public static final String NOME_BANCO = "banco.db";
     public static final String TABELA = "usuarios";
-    public static final String ID_USER = "id_usuario";
     public static final String NOME_USER = "nome_usuario";
     public static final String P_FOCOS = "perda_focos";
+
+    //Versao do software
     private static final int VERSAO = 1;
 
 
@@ -29,8 +30,7 @@ public class BancoDeDados extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         //Criacao da tabela quando rodar o app (Usa as definicoes das veriavies)
-        String sql = "CREATE TABLE "+TABELA+" ("
-                + ID_USER + "integer primary key autoincrement,"
+        String sql = "CREATE TABLE usuarios ("
                 + NOME_USER + "text,"
                 + P_FOCOS + "integer,"
                 +")";
