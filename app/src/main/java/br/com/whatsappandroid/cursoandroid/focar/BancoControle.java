@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
  * Created by gabrielscalici on 01/12/17.
  */
 
-public class BancoControle {
-
+public class BancoControle{
+/*
     private SQLiteDatabase db;
     private BancoDeDados banco;
 
@@ -41,5 +41,5 @@ public class BancoControle {
         else
             return "Registro Inserido com sucesso";
 
-    }
+    }*/
 }

@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1234;
 
     //Definindo o banco de dados
-
+    BancoDeDados bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +90,14 @@ public class LoginActivity extends AppCompatActivity {
                         public void onClick(DialogInterface arg0, int arg1) {
 
                             //CODIGO PARA CRIAR UM NOVO LOGIN NO BANCO DE DADOS
-                            BancoControle crud = new BancoControle(getBaseContext());
+                            //BancoControle crud = new BancoControle(getBaseContext());
 
                             //CASO ACEITE, CRIA UM NOVO LOGIN
                             //Recebe por padrao o valor 0 para a quantidade de focos perdidos
-                            String result = crud.insereDado(logUser.getText().toString().toUpperCase(), 0);
+                            //String result = crud.insereDado(logUser.getText().toString().toUpperCase(), 0);
                             //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                            bd.insereDado(logUser.getText().toString().toUpperCase(), 0);
+
                             Toast.makeText(LoginActivity.this, "Parabéns, você criou um novo Login", Toast.LENGTH_SHORT).show();
 
                         }
