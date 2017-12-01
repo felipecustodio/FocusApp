@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+
 /**
  * Created by gabrielscalici on 01/12/17.
  */
@@ -35,7 +36,6 @@ public class Read extends SQLiteOpenHelper {
     public String getUser(String name){
         openDB();
 
-        String user;
         String getUser = "SELECT * FROM " + NOME_TABELA + " WHERE " + NOME_USER + "'" + name + "'";
 
         try{
@@ -65,6 +65,36 @@ public class Read extends SQLiteOpenHelper {
         }
 
 
+    }
+
+    //Funcao para saber se o usuario existe
+    public int UserExists(String name){
+        openDB();
+
+        String getUser = "SELECT * FROM " + NOME_TABELA + " WHERE " + NOME_USER +" = '" + name + "'";
+
+
+        try{
+            Cursor c = db.rawQuery(getUser, null);
+
+            //Se existe algum registro na primeira posicao
+            if(c.moveToFirst()){
+                c.close();
+                return 1;
+
+            }else{
+                c.close();
+                return 0;
+            }
+
+        }catch(Exception e){
+
+            e.printStackTrace();
+            return 0;
+
+        }finally{
+            db.close();
+        }
 
 
     }

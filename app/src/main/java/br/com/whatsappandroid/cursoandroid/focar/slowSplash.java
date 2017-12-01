@@ -12,5 +12,9 @@ public class slowSplash extends Application {
     public void onCreate() {
         super.onCreate();
         SystemClock.sleep(1000);
+        //Criando a tabela de banco de dados
+        Create c = new Create(getApplicationContext());
+        //Metodo para criar a tabela pessoa se ela nao existir
+        c.createTable();
     }
 }

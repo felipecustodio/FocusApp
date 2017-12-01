@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.style.UpdateAppearance;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +54,11 @@ public class LoginActivity extends AppCompatActivity {
         //Editor de texto para recever o nome do usuario
         logUser = (EditText) findViewById(R.id.userName);
 
+        //Criando a tabela de banco de dados
+        Create c = new Create(getApplicationContext());
+        //Metodo para criar a tabela pessoa se ela nao existir
+        c.createTable();
+
 
 
         //FUNCAO DO BOTAO DE REGISTRO
@@ -89,16 +95,23 @@ public class LoginActivity extends AppCompatActivity {
                     builder.setPositiveButton("CRIAR NOVO", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface arg0, int arg1) {
 
-                            //CODIGO PARA CRIAR UM NOVO LOGIN NO BANCO DE DADOS
-                            //BancoControle crud = new BancoControle(getBaseContext());
-
                             //CASO ACEITE, CRIA UM NOVO LOGIN
-                            //Recebe por padrao o valor 0 para a quantidade de focos perdidos
-                            //String result = crud.insereDado(logUser.getText().toString().toUpperCase(), 0);
-                            //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                            bd.insereDado(logUser.getText().toString().toUpperCase(), 0);
+                            Pessoa p = new Pessoa();
+                            p.setNome(logUser.getText().toString().toUpperCase());
+                            p.setFocos(0); //Cria Zero perdas de foco por padrao
+                            p.setCelular(0); //Cria zero de perdas de foco pelo celular por padrao.
 
-                            Toast.makeText(LoginActivity.this, "Parabéns, você criou um novo Login", Toast.LENGTH_SHORT).show();
+                            //Usando a classe uptade para criar
+                            Update u = new Update(getApplicationContext());
+
+                            if(u.insertUser(p)){
+                                Toast.makeText(LoginActivity.this, "Parabéns, você criou um novo Login", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(LoginActivity.this, "Erro ao inserir", Toast.LENGTH_SHORT).show();
+                            }
+
+
+
 
                         }
                     });
@@ -108,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onClick(DialogInterface arg0, int arg1) {
 
                             //NÃO FAZ NADA, POIS O USUARIO CANCELOU A OPERACAO DE CRIAR COM O MEMSO USUARIO
+                            //NAO PRECISA DE LOGICA
 
                             Toast.makeText(LoginActivity.this, "Mantendo login antigo", Toast.LENGTH_SHORT).show();
                         }
@@ -127,32 +141,27 @@ public class LoginActivity extends AppCompatActivity {
                 //Variavel para armazenar o nome
                 String nome_digitado = logUser.getText().toString().toUpperCase();
 
-                //Checando se está vazio ou se é muito pequeno
-                if(nome_digitado.length() == 0){
-                    Toast.makeText(LoginActivity.this, "Insira um Login", Toast.LENGTH_SHORT).show();
-                    teste_carac = 1; //Nao deixar seguir para a proxima tela
-                }else if(nome_digitado.length() <= 3){
-                    Toast.makeText(LoginActivity.this, "Login muito curto", Toast.LENGTH_SHORT).show();
-                    teste_carac = 1;
-                }else if(nome_digitado.length() > 18){
-                    Toast.makeText(LoginActivity.this, "Login muito longo", Toast.LENGTH_SHORT).show();
-                    teste_carac = 1;
-                }else{
-                    teste_carac = 0;
+                //Botao para logar na conta de um usurio
+                Read r = new Read(getApplicationContext());
 
-                        //CODIGO PARA VERIFICAR SE EXISTE NO BANCO DE DADOS
+                if(r.UserExists(logUser.getText().toString().toUpperCase()) == 1){
+                    Toast.makeText(LoginActivity.this, "Usuario Válido!", Toast.LENGTH_SHORT).show();
 
-
-                }
-
-
-                if(teste_carac == 0) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     //i.putExtra("db_name", nome );
                     startActivity(i);
+                }else{
+                    Toast.makeText(LoginActivity.this, "Usuário Inválido!", Toast.LENGTH_SHORT).show();
                 }
+
+                //Pessoa p2 = new Pessoa();
+
             }
         });
+
+
+
+
 
         // Configure sign in request
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
@@ -177,6 +186,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     protected void signIn() {
+
+
         Intent signIntent = mGSIClient.getSignInIntent();
         startActivityForResult(signIntent, RC_SIGN_IN);
     }

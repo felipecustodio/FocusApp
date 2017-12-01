@@ -76,7 +76,6 @@ public class Delete extends SQLiteOpenHelper {
             db.close();
         }
 
-
     }
 
     public void openDB(){
