@@ -29,8 +29,25 @@
         android:text="Logar"
         android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintTop_toBottomOf="@+id/userName"
-        app:layout_constraintVertical_bias="0.24"
+        app:layout_constraintVertical_bias="0.045"
+        fbutton:layout_constraintLeft_toLeftOf="parent"
+        fbutton:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="159dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        android:text="Registrarr"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintTop_toBottomOf="@+id/userName"
+        app:layout_constraintVertical_bias="0.493"
         fbutton:layout_constraintLeft_toLeftOf="parent"
         fbutton:layout_constraintRight_toRightOf="parent" />
 
@@ -61,8 +78,10 @@
         android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogIn"
+        app:layout_constraintVertical_bias="0.912"
         fbutton:layout_constraintLeft_toLeftOf="parent"
         fbutton:layout_constraintRight_toRightOf="parent" />
 

@@ -1,9 +1,12 @@
 package br.com.whatsappandroid.cursoandroid.focar;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,9 +24,14 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+
+//Banco de dados
+
 public class LoginActivity extends AppCompatActivity {
 
     private Button logIn;
+    private Button register;
+
     private EditText logUser;
     private SignInButton gLogIn;
     private Integer teste_carac = 1;
@@ -31,7 +39,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1234;
 
     //Definindo o banco de dados
-    SQLiteDatabase db;
 
 
     @Override
@@ -39,42 +46,104 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Botoes para logar ou registrar
         logIn = (Button) findViewById(R.id.btnLogIn);
+        register = (Button) findViewById(R.id.btnRegister);
 
+        //Editor de texto para recever o nome do usuario
         logUser = (EditText) findViewById(R.id.userName);
 
+
+
+        //FUNCAO DO BOTAO DE REGISTRO
+        register.setOnClickListener(new View.OnClickListener() {
+
+
+            //Variavel para armazenar o nome
+            String nome_digitado = logUser.getText().toString().toUpperCase();
+
+            //Criando mensagem de alerta
+            private AlertDialog alerta;
+
+            @Override
+            public void onClick(View view) {
+                if (nome_digitado.length() == 0) {
+                    Toast.makeText(LoginActivity.this, "Insira um Login", Toast.LENGTH_SHORT).show();
+                    teste_carac = 1; //Nao deixar seguir para a proxima tela
+                } else if (nome_digitado.length() <= 3) {
+                    Toast.makeText(LoginActivity.this, "Login muito curto", Toast.LENGTH_SHORT).show();
+                    teste_carac = 1;
+                } else if (nome_digitado.length() > 18) {
+                    Toast.makeText(LoginActivity.this, "Login muito longo", Toast.LENGTH_SHORT).show();
+                    teste_carac = 1;
+                } else {
+                    teste_carac = 0;
+
+                    //CODIGO PARA VERIFICAR SE DESEJA CRIAR OUTRO E APAGAR O ANTIGO COM O MESMO NOME
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);//Cria o gerador do AlertDialog
+                    builder.setTitle("Criar novo login?/");//define o titulo
+                    builder.setMessage("O Login antigo com o mesmo nome será apagado!");//define a mensagem
+
+                    //BOTAO POSITIVO
+                    builder.setPositiveButton("CRIAR NOVO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+
+                            //CODIGO PARA CRIAR UM NOVO LOGIN NO BANCO DE DADOS
+                            BancoControle crud = new BancoControle(getBaseContext());
+
+                            //Recebe por padrao o valor 0 para a quantidade de focos perdidos
+                            String result = crud.insereDado(nome_digitado, 0);
+
+
+                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
+
+                            Toast.makeText(LoginActivity.this, "Parabéns, você criou um novo Login", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    //BOTAO NEGATIVO
+                    builder.setNegativeButton("MANTENHA ANTIGO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+
+                            //NÃO FAZ NADA, POIS O USUARIO CANCELOU A OPERACAO DE CRIAR COM O MEMSO USUARIO
+
+                            Toast.makeText(LoginActivity.this, "Mantendo login antigo", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    alerta = builder.create();
+                    alerta.show();//Exibe
+
+                }
+            }
+        });
+
+        //FUNCAO DO BOTAO DE LOGIN
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //Criando, caso nao exista, o banco de dados
-                //db = openOrCreateDatabase("FOCUS", Context.MODE_PRIVATE, null);
-                //db.execSQL("CREATE TABLE IF NOT EXISTS USUARIO_FOCUS (NOME_LOGIN VARCHAR, FOCO_USER INT;)");
-
-                //Verificando se o nome ja existe no banco de dados
-                //Criando um novo usuario ou selecionando o existente
-
-                String nome = logUser.getText().toString().toUpperCase();
+                //Variavel para armazenar o nome
+                String nome_digitado = logUser.getText().toString().toUpperCase();
 
                 //Checando se está vazio ou se é muito pequeno
-                if(logUser.getText().toString().toUpperCase().length() == 0){
+                if(nome_digitado.length() == 0){
                     Toast.makeText(LoginActivity.this, "Insira um Login", Toast.LENGTH_SHORT).show();
                     teste_carac = 1; //Nao deixar seguir para a proxima tela
-                }else if(logUser.getText().toString().toUpperCase().length() <= 3){
+                }else if(nome_digitado.length() <= 3){
                     Toast.makeText(LoginActivity.this, "Login muito curto", Toast.LENGTH_SHORT).show();
                     teste_carac = 1;
-                }else if(logUser.getText().toString().toUpperCase().length() > 18){
+                }else if(nome_digitado.length() > 18){
                     Toast.makeText(LoginActivity.this, "Login muito longo", Toast.LENGTH_SHORT).show();
                     teste_carac = 1;
                 }else{
                     teste_carac = 0;
 
-                        db.execSQL("INSERT INTO USUARIO_FOCUS VALUES('" + nome + "', 0 )");
+                        //CODIGO PARA VERIFICAR SE EXISTE NO BANCO DE DADOS
 
 
                 }
-
-
 
 
                 if(teste_carac == 0) {
