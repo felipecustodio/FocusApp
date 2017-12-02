@@ -1,5 +1,7 @@
 package br.com.whatsappandroid.cursoandroid.focar;
 
+import java.util.Random;
+
 /**
  * Created by gabrielscalici on 01/12/17.
  */
@@ -7,16 +9,13 @@ package br.com.whatsappandroid.cursoandroid.focar;
 public class Pessoa {
 
 
-    public Pessoa(){
-
-    }
 
     private String nome;
     private int focos;
     private int celular;
 
 
-    //Metodos get e set para o usuario
+
     public String getNome(){
         return nome;
     }
@@ -40,6 +39,7 @@ public class Pessoa {
     public void setCelular(int celular){
         this.celular = celular;
     }
+
 
 
 }

@@ -25,6 +25,8 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
+
 
 //Banco de dados
 
@@ -39,36 +41,28 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGSIClient;
     private static final int RC_SIGN_IN = 1234;
 
-    //Definindo o banco de dados
-    BancoDeDados bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Botoes para logar ou registrar
+        //ELEMENTOS
         logIn = (Button) findViewById(R.id.btnLogIn);
         register = (Button) findViewById(R.id.btnRegister);
-
-        //Editor de texto para recever o nome do usuario
         logUser = (EditText) findViewById(R.id.userName);
 
-        //Criando a tabela de banco de dados
-        Create c = new Create(getApplicationContext());
-        //Metodo para criar a tabela pessoa se ela nao existir
-        c.createTable();
+
+        //Criando a tabela se ela nao existir
+        new Create().createTable();
 
 
 
         //FUNCAO DO BOTAO DE REGISTRO
         register.setOnClickListener(new View.OnClickListener() {
 
-
             //Criando mensagem de alerta
             private AlertDialog alerta;
-
-
 
             @Override
             public void onClick(View view) {
@@ -95,15 +89,21 @@ public class LoginActivity extends AppCompatActivity {
                     builder.setPositiveButton("CRIAR NOVO", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface arg0, int arg1) {
 
+                            //Funcionalidade para criar um novo usuario
+                            Pessoa p = new Pessoa();
+                            //int aux = 0;
 
-                    /*        if(){
+                            p.setNome(logUser.getText().toString().toUpperCase());
+                            //p.setFocos(aux);
+                            //p.setCelular(aux);
+
+                            Update u = new Update();
+
+                            if (u.addPessoa(p)) {
                                 Toast.makeText(LoginActivity.this, "Parabéns, você criou um novo Login", Toast.LENGTH_SHORT).show();
-                            }else{
+                            } else {
                                 Toast.makeText(LoginActivity.this, "Erro ao inserir", Toast.LENGTH_SHORT).show();
-                     */       }
-
-
-
+                            }
 
                         }
                     });
@@ -130,20 +130,26 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //Variavel para armazenar o nome
-                String nome_digitado = logUser.getText().toString().toUpperCase();
+/*
+                ArrayList<Pessoa> pessoas = new Read().getPessoas();
+
+                for (int i = 0; i < pessoas.size(); i++) {
+                    Pessoa p = pessoas.get(i);
+                    System.out.println(" Nome: " + p.getNome() + ", Focos: " + p.getFocos() + " , Celular: " + p.getCelular() + " aa ");
+                }
+
+                if (pessoas.size() == 0) System.out.println("# Não existem registros.");
+*/
 
 
-                if(){
+                if(new Read().getExists(logUser.getText().toString().toUpperCase())){
+
                     Toast.makeText(LoginActivity.this, "Usuario Válido!", Toast.LENGTH_SHORT).show();
-
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
                 }else{
                     Toast.makeText(LoginActivity.this, "Usuário Inválido!", Toast.LENGTH_SHORT).show();
                 }
-
-
 
             }
         });
@@ -166,12 +172,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    /*
 
-
-
-
-     */
 
         // Configure sign in request
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
