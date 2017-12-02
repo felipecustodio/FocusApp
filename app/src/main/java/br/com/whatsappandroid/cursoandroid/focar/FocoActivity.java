@@ -34,7 +34,7 @@ public class FocoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_foco);
 
         createCircle();
-        counter = (TextView) findViewById(R.id.counter);
+        counter = (TextView) findViewById(R.id.txtcounter);
         counter.setText(Integer.toString(count));
 
         if(isCircleCreated) {
