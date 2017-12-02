@@ -95,20 +95,12 @@ public class LoginActivity extends AppCompatActivity {
                     builder.setPositiveButton("CRIAR NOVO", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface arg0, int arg1) {
 
-                            //CASO ACEITE, CRIA UM NOVO LOGIN
-                            Pessoa p = new Pessoa();
-                            p.setNome(logUser.getText().toString().toUpperCase());
-                            p.setFocos(0); //Cria Zero perdas de foco por padrao
-                            p.setCelular(0); //Cria zero de perdas de foco pelo celular por padrao.
 
-                            //Usando a classe uptade para criar
-                            Update u = new Update(getApplicationContext());
-
-                            if(u.insertUser(p)){
+                    /*        if(){
                                 Toast.makeText(LoginActivity.this, "Parabéns, você criou um novo Login", Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(LoginActivity.this, "Erro ao inserir", Toast.LENGTH_SHORT).show();
-                            }
+                     */       }
 
 
 
@@ -141,20 +133,17 @@ public class LoginActivity extends AppCompatActivity {
                 //Variavel para armazenar o nome
                 String nome_digitado = logUser.getText().toString().toUpperCase();
 
-                //Botao para logar na conta de um usurio
-                Read r = new Read(getApplicationContext());
 
-                if(r.UserExists(logUser.getText().toString().toUpperCase()) == 1){
+                if(){
                     Toast.makeText(LoginActivity.this, "Usuario Válido!", Toast.LENGTH_SHORT).show();
 
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    //i.putExtra("db_name", nome );
                     startActivity(i);
                 }else{
                     Toast.makeText(LoginActivity.this, "Usuário Inválido!", Toast.LENGTH_SHORT).show();
                 }
 
-                //Pessoa p2 = new Pessoa();
+
 
             }
         });
@@ -162,6 +151,27 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+
+
+
+
+     */
 
         // Configure sign in request
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
