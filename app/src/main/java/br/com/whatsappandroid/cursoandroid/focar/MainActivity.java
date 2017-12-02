@@ -14,20 +14,35 @@ public class MainActivity extends AppCompatActivity {
 
 
     //Texto de Olá para o usuario especifico
-    private TextView nome_conta;
+    //private TextView nome_conta;
 
     private static final String TAG = "MyActivity";
+    String nomeUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Pegando qual login veio da outra activity
-        //Intent intent = getIntent();
-        //String user = getIntent().getStringExtra("db_name");
-
-
         setContentView(R.layout.activity_main);
+
+
+
+
+        //Exibir o nome que foi passado e salvar o nome para futuras mudanças
+        final TextView nome_conta = (TextView) findViewById(R.id.txtNomeUser);
+        Intent intent = getIntent();
+        if(intent != null){
+            Bundle bundle = intent.getExtras();
+
+            if(bundle != null){
+                nomeUsuario = bundle.getString("nomeUser");
+                nome_conta.setText("VAMOS FOCAR," + nomeUsuario.toUpperCase()+ ".");
+
+            }
+
+        }
+
+
+
 
         ImageView foco = (ImageView) findViewById(R.id.focoBtn);
         foco.setOnClickListener(new View.OnClickListener() {
@@ -35,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                Log.d(TAG, "TESTE");
                 Intent intent = new Intent(MainActivity.this, FocoActivity.class);
+/*
+                //Passando informacoes para alterar o banco de dados
+                Bundle info = new Bundle();
+                info.putString("nome", nomeUsuario);
+                intent.putExtras(info);
+                startActivityForResult(intent, 2);
+*/
+
                 startActivity(intent);
             }
         });
@@ -66,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Label para usar o usuario cadastrado no banco de dados
-        //nome_conta.setText(nome_db.getString(0));
 
 
     }

@@ -91,11 +91,10 @@ public class LoginActivity extends AppCompatActivity {
 
                             //Funcionalidade para criar um novo usuario
                             Pessoa p = new Pessoa();
-                            //int aux = 0;
 
                             p.setNome(logUser.getText().toString().toUpperCase());
-                            //p.setFocos(aux);
-                            //p.setCelular(aux);
+                            p.setFocos(0);
+                            p.setCelular(0);
 
                             Update u = new Update();
 
@@ -113,13 +112,12 @@ public class LoginActivity extends AppCompatActivity {
                         public void onClick(DialogInterface arg0, int arg1) {
 
                             //NÃO FAZ NADA, POIS O USUARIO CANCELOU A OPERACAO DE CRIAR COM O MEMSO USUARIO
-                            //NAO PRECISA DE LOGICA
 
                             Toast.makeText(LoginActivity.this, "Mantendo login antigo", Toast.LENGTH_SHORT).show();
                         }
                     });
                     alerta = builder.create();
-                    alerta.show();//Exibe
+                    alerta.show();
 
                 }
             }
@@ -130,23 +128,17 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-/*
-                ArrayList<Pessoa> pessoas = new Read().getPessoas();
-
-                for (int i = 0; i < pessoas.size(); i++) {
-                    Pessoa p = pessoas.get(i);
-                    System.out.println(" Nome: " + p.getNome() + ", Focos: " + p.getFocos() + " , Celular: " + p.getCelular() + " aa ");
-                }
-
-                if (pessoas.size() == 0) System.out.println("# Não existem registros.");
-*/
-
+                String nome_para_proxima = logUser.getText().toString();
 
                 if(new Read().getExists(logUser.getText().toString().toUpperCase())){
-
                     Toast.makeText(LoginActivity.this, "Usuario Válido!", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(i);
+                    //transferindo informacao de nome
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    //Enviando a informacao para outra activity
+                    Bundle info = new Bundle();
+                    info.putString("nomeUser", nome_para_proxima);
+                    i.putExtras(info);
+                    startActivityForResult(i, 1);
                 }else{
                     Toast.makeText(LoginActivity.this, "Usuário Inválido!", Toast.LENGTH_SHORT).show();
                 }

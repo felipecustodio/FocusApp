@@ -77,4 +77,13 @@
         android:textSize="18sp"
         tools:layout_editor_absoluteX="159dp"
         tools:layout_editor_absoluteY="465dp" />
+
+    <TextView
+        android:id="@+id/txtNomeUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="380dp"
+        tools:layout_editor_absoluteY="446dp" />
 </android.support.constraint.ConstraintLayout>
