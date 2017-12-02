@@ -41,17 +41,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.165" />
 
-    <com.jjoe64.graphview.helper.GraphViewXML
-        android:id="@+id/graph"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:seriesColor="#0000ee"
-        app:seriesData="0=5;2=5;3=0;4=2"
-        app:seriesType="bar" />
+        android:layout_height="match_parent" />
 
 
     <TextView

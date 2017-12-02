@@ -31,5 +31,6 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'com.balysv:material-ripple:1.0.2'
     compile 'com.google.android.gms:play-services-auth:11.6.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }
 apply plugin: 'com.google.gms.google-services'
