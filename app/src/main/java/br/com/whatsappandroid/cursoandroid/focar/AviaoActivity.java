@@ -19,25 +19,34 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AviaoActivity extends AppCompatActivity {
+public class AviaoActivity extends AppCompatActivity implements SensorEventListener {
 
-    private SensorManager sm;
+    private SensorManager sensorManager;
     private Sensor gyro, accel;
     private SensorEventListener gyroEListener, accelEListener;
     private Switch s;
     private Vibrator v;
     private int count;
+    private long lastUpdate = 0;
+    private float last_x, last_y, last_z;
+    private static final int SHAKE_THRESHOLD = 100;
+    private Boolean sState = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aviao);
 
+        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_NORMAL);
+
         createCircle();
 
         s = (Switch) findViewById(R.id.onOff);
 
-        Boolean sState = s.isChecked();
+        sensorManager.unregisterListener(this);
 
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             TextView sText = findViewById(R.id.switchText);
@@ -45,78 +54,15 @@ public class AviaoActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b == false){
                     sText.setText("Desativado");
+                    onPause();
                 }else{
                     sText.setText("Ativado");
-                    initializeSensors();
+                    onResume();
                 }
             }
         });
 
     }
-
-    public void initializeSensors() {
-
-//        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
-        sm = (SensorManager) getSystemService(SENSOR_SERVICE);
-        gyro = sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        accel = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-        if(accel == null) {
-            Toast.makeText(this, "The device has no Accelerometer !", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-
-        if(gyro == null) {
-            Toast.makeText(this, "The device has no Gyroscope !", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-
-        sm.registerListener((SensorEventListener) this, accel, SensorManager.SENSOR_DELAY_NORMAL);
-
-        accelEListener = new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent sensorEvent) {
-                v.vibrate(500);
-            }
-
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int i) {
-            }
-        };
-
-        gyroEListener = new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent sensorEvent) {
-                if(sensorEvent.values[2] > 0.5f || sensorEvent.values[1] > 0.5f || sensorEvent.values[3] > 0.5f) {
-                    getWindow().getDecorView().setBackgroundColor(Color.BLUE);
-                    v.vibrate(500);
-//                    Log.w("GYRO", "HERE");
-
-                }else if(sensorEvent.values[2] < -0.5f || sensorEvent.values[1] < -0.5f || sensorEvent.values[3] < -0.5f) {
-                    getWindow().getDecorView().setBackgroundColor(Color.YELLOW);
-                    v.vibrate(500);
-                }
-            }
-
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int i) {
-
-            }
-        };
-    }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        sm.registerListener(gyroEListener, gyro, SensorManager.SENSOR_DELAY_FASTEST);
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        sm.unregisterListener(gyroEListener);
-//    }
 
     public void createCircle(){
         ImageView circle = (ImageView) findViewById(R.id.rCircle);
@@ -131,5 +77,53 @@ public class AviaoActivity extends AppCompatActivity {
         circle.setImageBitmap(bmp);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Sensor mySensor = sensorEvent.sensor;
+
+        if(s.isChecked() == false){
+            sensorManager.unregisterListener(this);
+            return;
+        }
+
+        if(mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
+
+            long curTime = System.currentTimeMillis();
+
+            if ((curTime - lastUpdate) > 100) {
+                long diffTime = (curTime - lastUpdate);
+                lastUpdate = curTime;
+
+                float speed = Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime * 10000;
+
+                if (speed > SHAKE_THRESHOLD) {
+                    v.vibrate(1000);
+                }
+
+                last_x = x;
+                last_y = y;
+                last_z = z;
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
 }

@@ -30,7 +30,10 @@
             android:name=".FocoActivity"
             android:label="@string/title_activity_foco"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AviaoActivity" />
+        <activity android:name=".AviaoActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity android:name=".RespireActivity" />
         <activity android:name=".StatActivity" />
     </application>
